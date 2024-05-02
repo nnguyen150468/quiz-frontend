@@ -1,5 +1,5 @@
 import { useState, useMemo } from "react";
-import axios from "axios";
+// import axios from "axios";
 // import viteLogo from "/vite.svg";
 import { SubmitHandler, useForm } from "react-hook-form";
 import "../App.css";
@@ -23,48 +23,48 @@ type QuestionSet = {
   question: string;
   answers: Answer[];
 };
-const MOCK_DATA: QuestionSet[][] = [
-  [
-    {
-      question: "Who likes banana?",
-      answers: [
-        { content: "na", isCorrect: false },
-        { content: "b", isCorrect: false },
-        { content: "c", isCorrect: false },
-        { content: "d", isCorrect: true, fullAnswer: "THE ANSWER" },
-      ],
-    },
-    {
-      question: "2 Who likes ya?",
-      answers: [
-        { content: "true", isCorrect: true, fullAnswer: "HERE APPLE" },
-        { content: "b", isCorrect: false },
-        { content: "c", isCorrect: false },
-        { content: "d", isCorrect: false },
-      ],
-    },
-  ],
-  [
-    {
-      question: "3 Who likes hahaa?",
-      answers: [
-        { content: "na", isCorrect: false },
-        { content: "b", isCorrect: false },
-        { content: "c", isCorrect: false },
-        { content: "true", isCorrect: true, fullAnswer: "THE ANSWER" },
-      ],
-    },
-    {
-      question: "4 Who likes starmie?",
-      answers: [
-        { content: "true", isCorrect: true, fullAnswer: "HERE APPLE" },
-        { content: "b", isCorrect: false },
-        { content: "c", isCorrect: false },
-        { content: "d", isCorrect: false },
-      ],
-    },
-  ],
-];
+// const MOCK_DATA: QuestionSet[][] = [
+//   [
+//     {
+//       question: "Who likes banana?",
+//       answers: [
+//         { content: "na", isCorrect: false },
+//         { content: "b", isCorrect: false },
+//         { content: "c", isCorrect: false },
+//         { content: "d", isCorrect: true, fullAnswer: "THE ANSWER" },
+//       ],
+//     },
+//     {
+//       question: "2 Who likes ya?",
+//       answers: [
+//         { content: "true", isCorrect: true, fullAnswer: "HERE APPLE" },
+//         { content: "b", isCorrect: false },
+//         { content: "c", isCorrect: false },
+//         { content: "d", isCorrect: false },
+//       ],
+//     },
+//   ],
+//   [
+//     {
+//       question: "3 Who likes hahaa?",
+//       answers: [
+//         { content: "na", isCorrect: false },
+//         { content: "b", isCorrect: false },
+//         { content: "c", isCorrect: false },
+//         { content: "true", isCorrect: true, fullAnswer: "THE ANSWER" },
+//       ],
+//     },
+//     {
+//       question: "4 Who likes starmie?",
+//       answers: [
+//         { content: "true", isCorrect: true, fullAnswer: "HERE APPLE" },
+//         { content: "b", isCorrect: false },
+//         { content: "c", isCorrect: false },
+//         { content: "d", isCorrect: false },
+//       ],
+//     },
+//   ],
+// ];
 function App() {
   //   const [count, setCount] = useState(0);
   const [data, setData] = useState<QuestionSet[]>([]);
@@ -88,18 +88,18 @@ function App() {
 
   const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY as string);
 
-  const formatInput = (text: string) => {
-    const pattern = /(\d+\.\s.+?)\n((?:.|\n)*?)(?=\n\d+\.|$)/g;
-    let pairs = [];
-    let match;
-    while ((match = pattern.exec(text)) !== null) {
-      const question = match[1].trim();
-      const answer = match[2].trim();
-      pairs.push({ question, answer });
-    }
-    pairs = JSON.stringify(pairs);
-    return pairs;
-  };
+  // const formatInput = (text: string) => {
+  //   const pattern = /(\d+\.\s.+?)\n((?:.|\n)*?)(?=\n\d+\.|$)/g;
+  //   let pairs = [];
+  //   let match;
+  //   while ((match = pattern.exec(text)) !== null) {
+  //     const question = match[1].trim();
+  //     const answer = match[2].trim();
+  //     pairs.push({ question, answer });
+  //   }
+  //   pairs = JSON.stringify(pairs);
+  //   return pairs;
+  // };
 
   // const
 
@@ -138,13 +138,7 @@ function App() {
       setIsLoading(false);
     }
   };
-  const mockLoading = () => {
-    setIsLoading(true);
-    setTimeout(() => {
-      setIsLoading(false);
-      setData([...data, ...MOCK_DATA[count]]);
-    }, 1000);
-  };
+
   const [score, setScore] = useState(0);
   const seenQuestions = new Set();
   const [showAnswer, setShowAnswer] = useState(false);
@@ -169,26 +163,26 @@ function App() {
     // setShowAnswer(false);
   };
 
-  const saveQuizSet = async () => {
-    try {
-      const postData = {
-        name: "Quiz Test @#@",
-        quizzes: data,
-      };
-      const response = await axios.post(
-        `${process.env.SERVER}/addQuizSetMobileMobile`,
-        postData,
-        {
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-      );
-      console.log("Success: ", response);
-    } catch (error) {
-      console.error("Error: ", error);
-    }
-  };
+  // const saveQuizSet = async () => {
+  //   try {
+  //     const postData = {
+  //       name: "Quiz Test @#@",
+  //       quizzes: data,
+  //     };
+  //     const response = await axios.post(
+  //       `${process.env.SERVER}/addQuizSetMobileMobile`,
+  //       postData,
+  //       {
+  //         headers: {
+  //           "Content-Type": "application/json",
+  //         },
+  //       }
+  //     );
+  //     console.log("Success: ", response);
+  //   } catch (error) {
+  //     console.error("Error: ", error);
+  //   }
+  // };
 
   const submitRawQuestionAnswer: SubmitHandler<Input> = (data) => {
     setCount(count + 1);
