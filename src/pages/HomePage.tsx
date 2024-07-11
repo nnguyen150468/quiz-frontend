@@ -6,7 +6,11 @@ import "../App.css";
 import { GoogleGenerativeAI } from "@google/generative-ai";
 import Loader from "../components/Loader";
 const PLACEHOLDER_TEXT =
-  "type in your question-answer pairs and hit Submit to get quiz";
+  "Type in your question-answer pairs and hit Submit to get quiz.\n\n" +
+  "Example: What is mitochondria's role?\n\n" +
+  "mitochondria produce the energy necessary for the cell's survival and functioning\n\n\n" +
+  "What does 'malloc' command do?\n\n" +
+  "allocate memory";
 
 /*
 mock question
@@ -201,7 +205,7 @@ function App() {
     // mockLoading();
   };
   return (
-    <>
+    <div className="home-container">
       <div>
         <form
           onSubmit={handleSubmit(submitRawQuestionAnswer)}
@@ -253,7 +257,9 @@ function App() {
       )}
       {data && currentQuestionIdx < data.length && (
         <>
-          <button onClick={handleClickNext}>Next</button>
+          <button className="submit-btn" onClick={handleClickNext}>
+            Next
+          </button>
           <br />
           {/* <button onClick={saveQuizSet}>Save this quiz set</button> */}
         </>
@@ -264,7 +270,7 @@ function App() {
           {/* <button onClick={saveQuizSet}>Save this quiz set</button> */}
         </>
       )}
-    </>
+    </div>
   );
 }
 
